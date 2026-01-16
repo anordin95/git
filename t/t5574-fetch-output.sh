@@ -40,8 +40,8 @@ test_expect_success 'fetch aligned output' '
 		grep -e "->" actual | cut -c 22- >../actual
 	) &&
 	cat >expect <<-\EOF &&
-	main                 -> origin/main
 	looooooooooooong-tag -> looooooooooooong-tag
+	main                 -> origin/main
 	EOF
 	test_cmp expect actual
 '
@@ -55,8 +55,8 @@ test_expect_success 'fetch compact output' '
 		grep -e "->" actual | cut -c 22- >../actual
 	) &&
 	cat >expect <<-\EOF &&
-	main       -> origin/*
 	extraaa    -> *
+	main       -> origin/*
 	EOF
 	test_cmp expect actual
 '
@@ -103,15 +103,15 @@ do
 		cat >expect <<-EOF &&
 		- $MAIN_OLD $ZERO_OID refs/forced/deleted-branch
 		- $MAIN_OLD $ZERO_OID refs/unforced/deleted-branch
-		  $MAIN_OLD $FAST_FORWARD_NEW refs/unforced/fast-forward
 		! $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/unforced/force-updated
+		* $ZERO_OID $MAIN_OLD refs/forced/new-branch
+		* $ZERO_OID $MAIN_OLD refs/remotes/origin/new-branch
+		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/remotes/origin/force-updated
+		  $MAIN_OLD $FAST_FORWARD_NEW refs/unforced/fast-forward
 		* $ZERO_OID $MAIN_OLD refs/unforced/new-branch
 		  $MAIN_OLD $FAST_FORWARD_NEW refs/forced/fast-forward
-		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/forced/force-updated
-		* $ZERO_OID $MAIN_OLD refs/forced/new-branch
 		  $MAIN_OLD $FAST_FORWARD_NEW refs/remotes/origin/fast-forward
-		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/remotes/origin/force-updated
-		* $ZERO_OID $MAIN_OLD refs/remotes/origin/new-branch
+		+ $FORCE_UPDATED_OLD $FORCE_UPDATED_NEW refs/forced/force-updated
 		EOF
 
 		# Change the URL of the repository to fetch different references.
@@ -179,8 +179,8 @@ test_expect_success 'fetch porcelain overrides fetch.output config' '
 	new_commit=$(git rev-parse HEAD) &&
 
 	cat >expect <<-EOF &&
-	  $old_commit $new_commit refs/remotes/origin/config-override
 	* $ZERO_OID $new_commit refs/tags/new-commit
+	  $old_commit $new_commit refs/remotes/origin/config-override
 	EOF
 
 	git -C porcelain -c fetch.output=compact fetch --porcelain >stdout 2>stderr &&
