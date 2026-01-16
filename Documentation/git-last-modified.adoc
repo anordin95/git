@@ -27,6 +27,7 @@ OPTIONS
 `--recursive`::
 	Instead of showing tree entries, step into subtrees and show all entries
 	inside them recursively.
+	This is identical as setting `--max-depth=-1`.
 
 `-t`::
 `--show-trees`::
@@ -36,7 +37,7 @@ OPTIONS
 `--max-depth=<depth>`::
 	For each pathspec given on the command line, descend at most `<depth>`
 	levels of directories. A negative value means no limit.
-	Setting a positive value implies `--recursive`.
+	The default depth is 0.
 	Cannot be combined with wildcards in the pathspec.
 
 `-z`::
